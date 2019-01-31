@@ -1,20 +1,15 @@
 <html>
 <head>
+   <div id="divtoBlink"></div>
   <title></title>
   <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-  body {
-    background: white;
-    //display: flex;
-    //align-items: center;
-    justify-content: center;
-  }
-  canvas {
-    border: 1px solid black;
-  }
+ 
+/*  #divtoBlink {
+    width:100px;
+    height:20px;
+    background-color:#627BAE;
+}
+  */    
   </style>
 </head>
 <body>
@@ -24,7 +19,11 @@ var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 16;
 var count = 0;
+    
+//let bckgrd = new Image();
+//bckgrd.src = "http://pixelartmaker.com/art/8aa027991abf5b6.png"
   
+    
 var snake = {
   x: 160,
   y: 160,
@@ -78,7 +77,9 @@ function loop() {
   context.fillStyle = 'red';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
   // draw snake
-  context.fillStyle = 'green';
+    //var juice = document.getElementById('divtoBlink');
+  context.fillStyle = 'blue';
+  
   snake.cells.forEach(function(cell, index) {
     
     context.fillRect(cell.x, cell.y, grid-1, grid-1);  
@@ -131,6 +132,26 @@ document.addEventListener('keydown', function(e) {
 });
 // start the game
 requestAnimationFrame(loop);
+    
+ /*   (document).ready(function() {
+    var f = document.getElementById('Foo');
+    setInterval(function() {
+        f.style.display = (f.style.display == 'none' ? 'red' : 'none');
+    }, 1000); 
+    
+});
+
+*/
+    
+/*setInterval(function () {
+    $("#divtoBlink").css("background-color", function () {
+        this.switch = !this.switch
+        return this.switch ? "red" : ""
+    });
+}, 100)
+ */   
+
+  
 </script>
 </body>
 </html>
