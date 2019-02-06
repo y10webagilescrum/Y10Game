@@ -43,15 +43,7 @@ li a:hover {
         text-align: center;
     }
     
-    #playerr{
-        color: black;
-        font-size: 30;
-        font-family: sans-serif;
-        position: absolute;
-        top:700;
-        left:320;   
-    }
-    
+   
     #text {
         color: black;
         font-size: 20;
@@ -60,14 +52,7 @@ li a:hover {
         left:500;   
     }
     
-     #player{
-        color: black;
-        font-size: 30;
-        font-family: sans-serif;
-        position: absolute;
-         top: 700;
-        left:1020;   
-    }
+   
     
     #howtoplay {
          color:#0033cc;
@@ -80,6 +65,23 @@ li a:hover {
         
     }
     
+    #Timermode {
+        color:#0033cc;
+        font size: 60;
+        font-family: sans-serif;
+       position: absolute;
+        top: 1300;
+        left: 660;
+    }
+    
+    #Freeforall {
+        color:#0033cc;
+        font size: 60;
+        font-family: sans-serif;
+       position: absolute;
+        top: 1150;
+        left: 670;
+    }
     #howtoplaygame {
          color:#0033cc;
         font size: 30;
@@ -89,7 +91,24 @@ li a:hover {
         left: 130;
         
     }
+    
+    #ffam {
+         color:#0033cc;
+        font size: 30;
+        font-family: sans-serif;
+       position: absolute;
+        top: 1200;
+        left: 340;
+    }
    
+    #tm {
+         color:#0033cc;
+        font size: 30;
+        font-family: sans-serif;
+       position: absolute;
+        top: 1350;
+        left: 340;
+    }
     </style>
 
 <title>Munch Down
@@ -102,25 +121,7 @@ li a:hover {
 
 <h2 id="instructions">Controls</h2>
     
-<h3 id="playerr"> Player 1</h3>
-   
-    <table id="playeronetable" border="1">
-  <th>Key</th><th>Direction</th>
-  <tr>
-     <td>W</td><td>Up</td>
-  </tr>
-  <tr>
-     <td>A</td><td>Left</td>
-  </tr>
-  <tr>
-     <td>D</td><td>Right</td>
-  </tr>
-        <tr>
-     <td>S</td><td>Down</td>
-  </tr>
-</table>
 
-    <h3 id="player"> Player 2</h3>
     <table id="playertwotable" border="1">
   <th>Key</th><th>Direction</th>
   <tr>
@@ -140,7 +141,14 @@ li a:hover {
     <h2 id="howtoplay">How to Play
     </h2>
     
-    <p id="howtoplaygame">The objective of Munch Down is to collect as many apples as possible, increasing your score and worms length. If you run into your body, you will explode and respawn.</p>
+    <p id="howtoplaygame">The objective of Munch Down is to collect as many apples as possible, increasing your score and worms length. If you run into your body, you will explode and respawn</p>
+    
+    <h2 id=Timermode>Timer Mode</h2>
+    <p id=tm>In this game mode you have a 60 second timer, the goal is to get the highest score possible in the limited time
+    </p>
+    
+    <h2 id=Freeforall>Free 4 All</h2>
+    <p id=ffam>In this game mode, there are no restrictions, get the highest score, but make sure not to run into yourself!</p>
     
     <br>
     <br>
@@ -152,32 +160,7 @@ li a:hover {
     <p></p>
     
     <style>
-         #playeronetable {
-         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 20%;
-  margin: auto;
-  color: white;
-    position: absolute;
-        top: 800;
-        left: 240;
-  
-    }
-        
-        #playeronetable td, #playeronetable th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-
-
-#playeronetable th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #0033cc;
-  color: white;
-}
+       
     
      #playertwotable {
          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -186,8 +169,8 @@ li a:hover {
   margin: auto;
   color: white;
     position: absolute;
-         top:800;
-         left: 940;
+         top:730;
+         left: 590;
 
     }
         
