@@ -54,6 +54,12 @@ Your browser does not support the audio element.
     
 <canvas width="800" height="800" id="game"></canvas>
 <script>
+  var counter = 60;
+	countUP();	
+	function countUP () {
+		counter-=1;
+		setTimeout ("countUP()", 1000);
+	}
     
    //  var sndtrk = new Audio("sound/bckgrdsong.mp3");
    // sndtrk.play();
@@ -119,6 +125,8 @@ function loop() {
   // draw apple
   context.fillStyle = 'red';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
+  context.font = "20px Verdana";
+   context.fillText("SCORE:"+score, 0, 30);
   // draw snake
     //var juice = document.getElementById('divtoBlink');
   context.fillStyle = 'blue';
@@ -144,6 +152,8 @@ function loop() {
         snake.dy = 0;
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
+          counter = 60;
+          score = 0;
       }
     }
   });
