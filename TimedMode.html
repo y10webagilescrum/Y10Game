@@ -100,6 +100,7 @@ function loop() {
   }
   count = 0;
   context.clearRect(0,0,canvas.width,canvas.height);
+	context.fillText("Timer:"+counter, 0, 50);
   snake.x += snake.dx;
   snake.y += snake.dy;
   // wrap snake position horizontally on edge of screen
