@@ -1,44 +1,78 @@
-<!DOCTYPE html>
 <html>
 <head>
+
   <title></title>
   <style>
-  html, body {
+      
+      
+ 
+    html, body {
     height: 100%;
     margin: 0;
   }
   body {
-    background: white;
+    background-image: url('http://pixelartmaker.com/art/8aa027991abf5b6.png');
     //display: flex;
-    align-items: center;
+    //align-items: center;
     justify-content: center;
   }
   canvas {
-    border: 1px solid black;
+    border: 5px solid black;
+    background-color: white;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+    position: absolute;
+    width: 50%;
+   
+      
   }
+      
+/*  #divtoBlink {
+    width:100px;
+    height:20px;
+    background-color:#627BAE;
+}
+  */    
+      
+     /* <audio controls autoplay loop >
+    <source src="sound/unity.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+  */
   </style>
-</head>
-<body>
-<canvas width="400" height="400" id="game"></canvas>
-<script>
+<head></head>
     
-    var counter = 60;
+<body>
+    
+<iframe src="sound/unity.mp3" allow="autoplay" style="display:none" id="iframeAudio">
+</iframe> 
+
+
+    
+<canvas width="800" height="800" id="game"></canvas>
+<script>
+  var counter = 60;
 	countUP();	
 	function countUP () {
 		counter-=1;
 		setTimeout ("countUP()", 1000);
 	}
     
+   //  var sndtrk = new Audio("sound/bckgrdsong.mp3");
+   // sndtrk.play();
+    
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 16;
 var count = 0;
-var score = 0;
-var hit = 10;
+    
+//let bckgrd = new Image();
+//bckgrd.src = "http://pixelartmaker.com/art/8aa027991abf5b6.png"
   
-let bckgrd = new Image();
-bckgrd.src = "http://pixelartmaker.com/art/8aa027991abf5b6.png"
-	
+    
 var snake = {
   x: 160,
   y: 160,
@@ -50,7 +84,6 @@ var snake = {
   // length of the snake. grows when eating an apple
   maxCells: 4
 };
-    
 var apple = {
   x: 320,
   y: 320
@@ -67,7 +100,6 @@ function loop() {
   }
   count = 0;
   context.clearRect(0,0,canvas.width,canvas.height);
-    context.fillText("Timer:"+counter, 0, 50);
   snake.x += snake.dx;
   snake.y += snake.dy;
   // wrap snake position horizontally on edge of screen
@@ -85,35 +117,30 @@ function loop() {
   else if (snake.y >= canvas.height) {
     snake.y = 0;
   }
-  
   snake.cells.unshift({x: snake.x, y: snake.y});
   if (snake.cells.length > snake.maxCells) {
         snake.cells.pop();
+
   }
   // draw apple
-  context.font = "20px Verdana";
-    context.fillText("SCORE:"+score, 0, 30);
-    
-context.fillStyle = 'red';
+  context.fillStyle = 'red';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
+  context.font = "20px Verdana";
+   context.fillText("SCORE:"+score, 0, 30);
   // draw snake
-context.fillStyle = 'blue';
-    snake.cells.forEach(function(cell, index) {
+    //var juice = document.getElementById('divtoBlink');
+  context.fillStyle = 'blue';
+  
+  snake.cells.forEach(function(cell, index) {
+    
     context.fillRect(cell.x, cell.y, grid-1, grid-1);  
     // snake ate apple
     if (cell.x === apple.x && cell.y === apple.y) {
       snake.maxCells++;
-        if(score<100){
-            hit=10
-        }
-        else if(score<200){
-            hit=20;
-        }
-        score+=hit;
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
     }
-    // check collision with all cells after this one
+    // check collision with all cells after this one (modified bubble sort)
     for (var i = index + 1; i < snake.cells.length; i++) {
       
         if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
@@ -125,15 +152,15 @@ context.fillStyle = 'blue';
         snake.dy = 0;
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
-        score=0;
-        context.font= "50px Verdana"
-        context.fillText("GAME OVER", 200, 200);
+          counter = 60;
+          score = 0;
       }
     }
   });
 }
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
+
   
   // left arrow key
   if (e.which === 37 && snake.dx === 0) {
@@ -155,11 +182,28 @@ document.addEventListener('keydown', function(e) {
     snake.dy = grid;
     snake.dx = 0;
   }
-    
 });
-    
 // start the game
 requestAnimationFrame(loop);
+    
+ /*   (document).ready(function() {
+    var f = document.getElementById('Foo');
+    setInterval(function() {
+        f.style.display = (f.style.display == 'none' ? 'red' : 'none');
+    }, 1000); 
+    
+});
+
+*/
+    
+/*setInterval(function () {
+    $("#divtoBlink").css("background-color", function () {
+        this.switch = !this.switch
+        return this.switch ? "red" : ""
+    });
+}, 100)
+ */  
+  
 </script>
 </body>
 </html>
