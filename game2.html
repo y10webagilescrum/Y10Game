@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
   body {
     background: white;
     //display: flex;
-    //align-items: center;
+    align-items: center;
     justify-content: center;
   }
   canvas {
@@ -22,10 +21,20 @@
 <body>
 <canvas width="400" height="400" id="game"></canvas>
 <script>
+    
+    var counter = 60;
+	countUP();	
+	function countUP () {
+		counter-=1;
+		setTimeout ("countUP()", 1000);
+	}
+    
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 16;
 var count = 0;
+var score = 0;
+var hit = 10;
   
 var snake = {
   x: 160,
@@ -38,6 +47,7 @@ var snake = {
   // length of the snake. grows when eating an apple
   maxCells: 4
 };
+    
 var apple = {
   x: 320,
   y: 320
@@ -54,6 +64,7 @@ function loop() {
   }
   count = 0;
   context.clearRect(0,0,canvas.width,canvas.height);
+    context.fillText("Timer:"+counter, 0, 50);
   snake.x += snake.dx;
   snake.y += snake.dy;
   // wrap snake position horizontally on edge of screen
@@ -71,26 +82,35 @@ function loop() {
   else if (snake.y >= canvas.height) {
     snake.y = 0;
   }
+  
   snake.cells.unshift({x: snake.x, y: snake.y});
   if (snake.cells.length > snake.maxCells) {
         snake.cells.pop();
-
   }
   // draw apple
-  context.fillStyle = 'blue';
+    
+context.fillStyle = 'red';
   context.fillRect(apple.x, apple.y, grid-1, grid-1);
   // draw snake
-  context.fillStyle = 'black';
-  snake.cells.forEach(function(cell, index) {
-    
+    context.font = "20px Verdana";
+    context.fillText("SCORE:"+score, 0, 30);
+context.fillStyle = 'blue';
+    snake.cells.forEach(function(cell, index) {
     context.fillRect(cell.x, cell.y, grid-1, grid-1);  
     // snake ate apple
     if (cell.x === apple.x && cell.y === apple.y) {
       snake.maxCells++;
+        if(score<100){
+            hit=10
+        }
+        else if(score<200){
+            hit=20;
+        }
+        score+=hit;
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
     }
-    // check collision with all cells after this one (modified bubble sort)
+    // check collision with all cells after this one
     for (var i = index + 1; i < snake.cells.length; i++) {
       
         if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
@@ -102,13 +122,16 @@ function loop() {
         snake.dy = 0;
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
+        score=0;
+        context.font= "50px Verdana"
+        context.fillText("GAME OVER", 200, 200);
+        counter = 60;
       }
     }
   });
 }
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
-
   
   // left arrow key
   if (e.which === 37 && snake.dx === 0) {
@@ -130,7 +153,10 @@ document.addEventListener('keydown', function(e) {
     snake.dy = grid;
     snake.dx = 0;
   }
+    
 });
+
+    
 // start the game
 requestAnimationFrame(loop);
 </script>
