@@ -1,20 +1,63 @@
 <html>
 <head>
-   <div id="divtoBlink"></div>
+
   <title></title>
   <style>
+      
+      
  
+    html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    background-image: url('http://pixelartmaker.com/art/8aa027991abf5b6.png');
+    //display: flex;
+    //align-items: center;
+    justify-content: center;
+  }
+  canvas {
+    border: 5px solid black;
+    background-color: white;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+    position: absolute;
+    width: 50%;
+   
+      
+  }
+      
 /*  #divtoBlink {
     width:100px;
     height:20px;
     background-color:#627BAE;
 }
   */    
+      
+  
   </style>
-</head>
+<head></head>
+    
 <body>
-<canvas width="400" height="400" id="game"></canvas>
+    
+<audio controls autoplay loop >
+    <source src="sound/uproar.ogg" type="audio/ogg">
+    <source src="sound/uproar.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+
+
+    
+<canvas width="800" height="800" id="game"></canvas>
 <script>
+    
+   //  var sndtrk = new Audio("sound/bckgrdsong.mp3");
+   // sndtrk.play();
+    
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 16;
@@ -149,8 +192,7 @@ requestAnimationFrame(loop);
         return this.switch ? "red" : ""
     });
 }, 100)
- */   
-
+ */  
   
 </script>
 </body>
