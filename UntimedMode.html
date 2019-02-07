@@ -9,12 +9,11 @@
   }
   body {
     background-image: url('http://pixelartmaker.com/art/8aa027991abf5b6.png');
-    //display: flex;
     align-items: center;
     justify-content: center;
   }
   canvas {
-     border: 5px solid black;
+    border: 5px solid black;
     background-color: white;
     top:0;
     bottom: 0;
@@ -29,12 +28,11 @@
   </style>
 </head>
 <body>
-	
-	
-	
-	<iframe src="sound/flyaway.mp3" allow="autoplay" allow="loop" style="display:none" id="iframeAudio">
+    
+    <iframe src="sound/unity.mp3" allow="autoplay" allow="loop" style="display:none" id="iframeAudio">
 </iframe> 
-	
+    
+    
 <canvas width="800" height="800" id="game"></canvas>
 <script>
     
@@ -43,7 +41,28 @@
 	function countUP () {
 		counter-=1;
 		setTimeout ("countUP()", 1000);
+        if (counter==0){
+            dead = true;
+            snake.x = 160;
+            snake.y = 160;
+            snake.cells = [];
+            snake.maxCells = 4;
+            snake.dx = grid;
+            snake.dy = 0;
+            apple.x = getRandomInt(0, 25) * grid;
+            apple.y = getRandomInt(0, 25) * grid;
+            score=0;
+            context.font= "50px Verdana"
+            context.fillText("GAME OVER", 200, 200);
+            counter = 60;
+        }
 	}
+    
+     setTimeout("gameovertime()", 60000);
+    function gameovertime(){
+        gameover=true;
+        gameover();
+    }
     
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
@@ -51,6 +70,8 @@ var grid = 16;
 var count = 0;
 var score = 0;
 var hit = 10;
+var gameover =false;
+var dead = false;
   
 var snake = {
   x: 160,
@@ -74,77 +95,89 @@ function getRandomInt(min, max) {
 }
 // game loop
 function loop() {
-  requestAnimationFrame(loop);
-  if (++count < 4) {
-    return;
-  }
-  count = 0;
-  context.clearRect(0,0,canvas.width,canvas.height);
-  snake.x += snake.dx;
-  snake.y += snake.dy;
-  // wrap snake position horizontally on edge of screen
-  if (snake.x < 0) {
-    snake.x = canvas.width - grid;
-  }
-  else if (snake.x >= canvas.width) {
-    snake.x = 0;
-  }
   
-  // wrap snake position vertically on edge of screen
-  if (snake.y < 0) {
-    snake.y = canvas.height - grid;
-  }
-  else if (snake.y >= canvas.height) {
-    snake.y = 0;
-  }
-  
-  snake.cells.unshift({x: snake.x, y: snake.y});
-  if (snake.cells.length > snake.maxCells) {
-        snake.cells.pop();
-  }
-  // draw apple
-    
-context.fillStyle = 'red';
-  context.fillRect(apple.x, apple.y, grid-1, grid-1);
-  // draw snake
-    context.font = "20px Verdana";
-    context.fillText("SCORE:"+score, 0, 30);
-context.fillStyle = 'blue';
-    snake.cells.forEach(function(cell, index) {
-    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
-    // snake ate apple
-    if (cell.x === apple.x && cell.y === apple.y) {
-      snake.maxCells++;
-        if(score<100){
-            hit=10
+
+    if (!dead){
+        requestAnimationFrame(loop);
+      if (++count < 4) {
+        return;
+      }
+      count = 0;
+      context.clearRect(0,0,canvas.width,canvas.height);
+      snake.x += snake.dx;
+      snake.y += snake.dy;
+      // wrap snake position horizontally on edge of screen
+      if (snake.x < 0) {
+        snake.x = canvas.width - grid;
+      }
+      else if (snake.x >= canvas.width) {
+        snake.x = 0;
+      }
+
+      // wrap snake position vertically on edge of screen
+      if (snake.y < 0) {
+        snake.y = canvas.height - grid;
+      }
+      else if (snake.y >= canvas.height) {
+        snake.y = 0;
+      }
+
+      snake.cells.unshift({x: snake.x, y: snake.y});
+      if (snake.cells.length > snake.maxCells) {
+            snake.cells.pop();
+      }
+      // draw apple
+
+    context.fillStyle = 'red';
+      context.fillRect(apple.x, apple.y, grid-1, grid-1);
+      // draw snake
+        context.font = "20px Verdana";
+        context.fillText("SCORE:"+score, 0, 30);
+    context.fillStyle = 'blue';
+        snake.cells.forEach(function(cell, index) {
+        context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+        // snake ate apple
+        if (cell.x === apple.x && cell.y === apple.y) {
+          snake.maxCells++;
+            if(score<100){
+                hit=10
+            }
+            else if(score<200){
+                hit=20;
+            }
+            score+=hit;
+          apple.x = getRandomInt(0, 25) * grid;
+          apple.y = getRandomInt(0, 25) * grid;
         }
-        else if(score<200){
-            hit=20;
+        // check collision with all cells after this one
+        for (var i = index + 1; i < snake.cells.length; i++) {
+
+            if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                snake.x = 160;
+                snake.y = 160;
+                snake.cells = [];
+                snake.maxCells = 4;
+                snake.dx = grid;
+                snake.dy = 0;
+                apple.x = getRandomInt(0, 25) * grid;
+                apple.y = getRandomInt(0, 25) * grid;
+                score=0;
+                context.font= "50px Verdana"
+                context.fillText("GAME OVER", 200, 200);
+                counter = 60;
+                dead = true;
+                loop();
+          }
         }
-        score+=hit;
-      apple.x = getRandomInt(0, 25) * grid;
-      apple.y = getRandomInt(0, 25) * grid;
+      });
     }
-    // check collision with all cells after this one
-    for (var i = index + 1; i < snake.cells.length; i++) {
-      
-        if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-        snake.x = 160;
-        snake.y = 160;
-        snake.cells = [];
-        snake.maxCells = 4;
-        snake.dx = grid;
-        snake.dy = 0;
-        apple.x = getRandomInt(0, 25) * grid;
-        apple.y = getRandomInt(0, 25) * grid;
-        score=0;
+    function gameover(){
         context.font= "50px Verdana"
         context.fillText("GAME OVER", 200, 200);
-        counter = 60;
-      }
     }
-  });
+    return;
 }
+
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
   
@@ -168,6 +201,10 @@ document.addEventListener('keydown', function(e) {
     snake.dy = grid;
     snake.dx = 0;
   }
+    else if (e.which === 10){
+        dead = false;
+        requestAnimationFrame(loop);
+    }
     
 });
 
